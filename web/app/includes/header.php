@@ -17,4 +17,8 @@
 <body class="bg-gray-100">
   <header class="text-center py-10">
     <h1 class="text-4xl font-bold text-gray-800"><?= htmlspecialchars($title) ?></h1>
+    <nav class="mt-5">
+      <a href="/" class="text-blue-500 hover:underline mx-3">Home</a>
+      <a href="/blog" class="text-blue-500 hover:underline mx-3">Blog</a> <!-- Blog link -->
+    </nav>
   </header>

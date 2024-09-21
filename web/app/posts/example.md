@@ -1,3 +1,9 @@
+---
+title: 'My Example Post'
+description: 'This is a brief description of my example blog post.'
+date: '2024-09-21'
+---
+
 # Headers
 
 ```
