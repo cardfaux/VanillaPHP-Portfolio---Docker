@@ -1,0 +1,7 @@
+mysql/*
+
+debian/server/gowitness.sqlite3
+debian/server/airbnb.com
+
+.DS_Store
+.env
