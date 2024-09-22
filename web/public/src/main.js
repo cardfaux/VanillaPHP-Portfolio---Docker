@@ -1,1 +1,1 @@
-console.log('JavaScript is working!');
+console.log('Hello from main.js!');
