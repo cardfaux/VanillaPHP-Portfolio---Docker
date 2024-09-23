@@ -6,8 +6,35 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 $router = new Router();
 
 $router->get('/', function () {
-  // Pass any data to the view here, for example, a page title
-  view('homepage', ['title' => 'Welcome to My Portfolio']);
+  $postsDirectory = '../app/posts/';
+  $files = array_diff(scandir($postsDirectory), ['..', '.']);
+
+  // Get all Markdown files and prepare metadata
+  $markdownFiles = array_filter($files, function ($file) {
+    return pathinfo($file, PATHINFO_EXTENSION) === 'md';
+  });
+
+  $posts = array_map(function ($file) use ($postsDirectory) {
+    $document = Spatie\YamlFrontMatter\YamlFrontMatter::parseFile($postsDirectory . $file);
+    $slug = pathinfo($file, PATHINFO_FILENAME);
+    $title = $document->title ?? ucfirst(str_replace('-', ' ', $slug));
+    $description = $document->description ?? '';
+    return [
+      'slug' => $slug,
+      'title' => $title,
+      'description' => $description,
+    ];
+  }, $markdownFiles);
+
+  // Optionally sort posts by newest first
+  usort($posts, function ($a, $b) {
+    return strcmp($b['slug'], $a['slug']);
+  });
+
+  // Pass only the first 3 posts for the homepage
+  $postsForHomePage = array_slice($posts, 0, 3);
+
+  view('homepage', ['posts' => $postsForHomePage, 'title' => 'Welcome to My Portfolio']);
 });
 
 $router->get('/posts/([a-zA-Z0-9-]+)', function ($slug) {
